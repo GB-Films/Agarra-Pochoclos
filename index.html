@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>GB Films • Pochoclos Catcher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div id="gameArea">
+      <canvas id="canvas" width="360" height="640" aria-label="Pochoclos Catcher"></canvas>
+
+      <div class="hud">
+        <div class="topbar">
+          <div class="badge">Puntaje: <span class="score" id="score">0</span></div>
+          <div class="badge small">No dejes caer ninguno</div>
+        </div>
+        <div class="hint small" id="hint">Desliza el balde con tu dedo</div>
+      </div>
+
+      <div id="screen-start" class="screen" role="dialog" aria-modal="true">
+        <div class="panel flex-col">
+          <div class="logo">
+            <img src="assets/gb-films-logo.png" alt="GB Films" onerror="this.style.display='none'"/>
+            <strong>GB Films</strong>
+          </div>
+          <h1>Pochoclos Catcher</h1>
+          <p>Mové el balde, atrapá todos los pochoclos. Si toca el piso, perdiste.</p>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Tu nombre</label>
+              <input id="playerName" type="text" placeholder="Anita" autocomplete="name"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="flex:1">
+              <label>Skin del balde</label>
+              <select id="skinSelect" data-skins="GB_Films.png,BANI_VFX.png,El_Condenado.png,Rendering.png,El_Diente_Negro.png,El_Sonido_Del_Viento.png,Cucaracha.png,Memento_Mori.png">
+                
+              </select>
+            </div>
+          </div>
+
+          <div class="center">
+            <button class="btn btn-primary" id="btnPlay">Jugar</button>
+            <button class="btn btn-outline" id="btnBoard">Tabla de posiciones</button>
+          </div>
+
+          <p class="small"> GANATE UNOS POCHOCLOS! </p>
+        </div>
+      </div>
+
+      <div id="screen-board" class="screen" hidden>
+        <div class="panel">
+          <div class="center" style="justify-content:space-between">
+            <h1 style="margin:0">Tabla de posiciones</h1>
+            <button class="btn btn-outline" id="btnBack">Volver</button>
+          </div>
+          <table id="boardTable" aria-label="Tabla de posiciones">
+            <thead><tr><th>#</th><th>Jugador</th><th>Puntaje</th><th>Fecha</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p class="small">Se guardan los últimos mejores puntajes.</p>
+        </div>
+      </div>
+
+      <div id="screen-over" class="screen" hidden>
+        <div class="panel center" style="flex-direction:column">
+          <h1>¡Perdiste!</h1>
+          <p>Tu puntaje: <strong id="finalScore">0</strong></p>
+          <div class="center">
+            <button class="btn btn-primary" id="btnReplay">Jugar de nuevo</button>
+            <button class="btn btn-outline" id="btnBoard2">Tabla</button>
+            <button class="btn btn-outline" id="btnHome">Inicio</button>
+          </div>
+          <div id="saveStatus" class="small" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <div class="toast" id="toast" hidden></div>
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
+

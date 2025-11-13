@@ -1,0 +1,147 @@
+:root {
+  --bg:#0a0a0a;
+  --pink:#ff1e9c;
+  --violet:#7b61ff;
+  --white:#ffffff;
+  --muted:#9aa0a6;
+}
+
+* { box-sizing:border-box; }
+html,body {
+  height:100%;
+  margin:0;
+  background:linear-gradient(180deg,#0a0a0a 0%, #141414 100%);
+  color:var(--white);
+  font-family:system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial,'Noto Sans';
+}
+
+.wrap { display:grid;place-items:center;height:100%;padding:12px; }
+#gameArea {
+  position:relative;
+  max-width:480px;
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:18px;
+  box-shadow:0 10px 40px rgba(0,0,0,.55);
+  overflow:hidden;
+  background:#111;
+  border:1px solid #1f1f1f;
+}
+
+canvas { position:absolute;inset:0;width:100%;height:100%;touch-action:none; }
+.hud { position:absolute;inset:0;pointer-events:none; }
+.topbar { position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between; }
+.badge { background:rgba(0,0,0,.45);backdrop-filter:blur(6px);padding:6px 10px;border-radius:10px; }
+.score { font-variant-numeric:tabular-nums; }
+
+.screen { position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 30%, rgba(123,97,255,.18), transparent 60%); }
+.panel { width:88%;max-width:380px;background:rgba(12,12,12,.85);backdrop-filter:blur(8px);border:1px solid #2b2b2b;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.4); }
+
+.btn { cursor:pointer;border:none;border-radius:14px;padding:12px 14px;font-weight:800; }
+.btn-primary { background:linear-gradient(90deg,var(--pink),var(--violet));color:#fff; }
+.btn-outline { background:transparent;color:#fff;border:1px solid #3a3a3a; }
+.center { display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap; }
+
+.toast {
+  position:absolute;left:50%;transform:translateX(-50%);bottom:10px;
+  background:#111;border:1px solid #2a2a2a;border-radius:12px;padding:8px 12px;
+  color:#ddd;font-size:13px;
+}
+/* Asegura que cualquier elemento con [hidden] de verdad se oculte */
+[hidden] { display: none !important; }
+
+/* --- UI POLISH --- */
+#gameArea { border:1px solid #1f1f1f; background: radial-gradient(ellipse at 50% 10%, rgba(123,97,255,.13), rgba(0,0,0,.8)); }
+
+.panel h1 { font-size:28px; margin:6px 0 8px; letter-spacing:.3px; }
+.panel p { margin:6px 0 12px; color:#c6c8d1; line-height:1.35; }
+
+.row { display:flex; gap:10px; align-items:center; margin:6px 0 4px; }
+label { font-size:12px; color:#aaa; display:block; margin-bottom:6px; }
+
+input[type="text"], select {
+  background:#0f0f12; color:#fff; border:1px solid #2a2a2e;
+  border-radius:12px; padding:10px 12px; width:100%; outline:none;
+  box-shadow: inset 0 0 0 999px rgba(255,255,255,0); transition: box-shadow .2s, border-color .2s;
+}
+input[type="text"]:focus, select:focus { border-color:#7b61ff; box-shadow: 0 0 0 3px rgba(123,97,255,.2); }
+
+.btn { padding:12px 16px; border-radius:16px; }
+.btn-primary {
+  background: linear-gradient(90deg, var(--pink), var(--violet));
+  box-shadow: 0 6px 20px rgba(123,97,255,.35);
+}
+.btn-outline:hover { border-color:#6a6a6a; }
+
+.badge { border:1px solid #333; color:#f1f3f5; }
+.small { color:#9aa0a6; }
+
+.logo img { height:40px; border-radius:8px; }
+.logo strong { font-size:18px; letter-spacing:.5px; }
+
+/* Muy importante: respetar el atributo [hidden] */
+[hidden] { display: none !important; }
+
+/* --- MOBILE-FRIENDLY LAYOUT --- */
+
+/* Usá el viewport real del celular y respetá el notch */
+html, body { height: 100%; }
+body { 
+  min-height: 100dvh;            /* alto real en mobile */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overscroll-behavior: none;
+}
+
+/* El contenedor centra y usa todo el alto útil */
+.wrap {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 8px;                  /* menos padding en celus */
+}
+
+/* El área del juego ocupa casi todo el alto y mantiene 9:16 */
+#gameArea {
+  height: calc(100dvh - 16px);   /* alto total menos padding */
+  aspect-ratio: 9 / 16;          /* mantiene proporción vertical */
+  width: auto;                   /* que el ancho lo decida el aspect */
+  max-width: min(520px, 100vw - 16px);
+  border-radius: 16px;
+}
+
+/* El canvas llena el área y evita scroll accidental */
+canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  touch-action: none;
+}
+
+/* Panels y tipografías más legibles en pantallas chicas */
+.panel h1 { font-size: 24px; }
+.panel p  { font-size: 14px; }
+.badge    { font-size: 12px; }
+
+input[type="text"], select, .btn {
+  min-height: 44px;              /* objetivo táctil recomendado */
+  font-size: 16px;               /* evita zoom en iOS */
+}
+
+/* Ajustes adicionales para < 420px de ancho */
+@media (max-width: 420px) {
+  .panel { width: 92%; padding: 14px; border-radius: 14px; }
+  .btn { padding: 10px 14px; border-radius: 14px; }
+  .topbar { top: 8px; left: 8px; right: 8px; }
+  .hint { bottom: 70px; }
+}
+
+/* MUY IMPORTANTE: que [hidden] realmente oculte */
+[hidden] { display: none !important; }
+
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  box-shadow: none;
+  filter: grayscale(30%);
+}
+
